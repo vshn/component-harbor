@@ -59,7 +59,19 @@ s3:
 type:: strings
 default:: Vault reference
 
-A vault reference pointing to S3 credentials
+S3 credentials for storing image blobs.
+
+
+== `secret_key`
+
+[horizontal]
+type:: string(16)
+default:: Vault reference
+
+Secret key for harbor encryption. Must be exactly 16 characters long.
+
+
+== Vault secrets
 
 [source,bash]
 ----
@@ -71,8 +83,8 @@ key="clusters/kv/${TENANT_ID}/${CLUSTER_ID}/${instance}"
 vault kv get "${key}"
 
 # If there are existing secrets, add your instance secrets:
-vault kv patch "${key}" s3-accesskey=SOME_VALUE s3-secretkey=SOME_VALUE
+vault kv patch "${key}" s3-accesskey=SOME_VALUE s3-secretkey=SOME_VALUE secretkey=$(pwgen 16 1)
 
 # If there is no pre-existing secret, create new:
-vault kv put "${key}" s3-accesskey=SOME_VALUE s3-secretkey=SOME_VALUE
+vault kv put "${key}" s3-accesskey=SOME_VALUE s3-secretkey=SOME_VALUE secretkey=$(pwgen 16 1)
 ----

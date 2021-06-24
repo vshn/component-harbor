@@ -16,7 +16,7 @@ parameters:
       secretkey: '?{vaultkv:${customer:name}/${cluster:name}/${_instance}/s3-secretkey}'
 
     # The secret key used for encryption. Must be a string of 16 chars.
-    secretKey: ${harbor:secret_key}
+    secret_key: '?{vaultkv:${customer:name}/${cluster:name}/${_instance}/secretkey}'
 
     # see: https://github.com/goharbor/harbor-helm/blob/master/values.yaml
     helm_values:
