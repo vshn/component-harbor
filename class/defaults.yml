@@ -21,9 +21,10 @@ parameters:
     # see: https://github.com/goharbor/harbor-helm/blob/master/values.yaml
     helm_values:
       expose:
-        type: clusterIP
-        clusterIP:
-          name: harbor
+        type: ingress
+        ingress:
+          hosts:
+            core: ${harbor:fqdn}
         tls:
           auto:
             commonName: ${harbor:fqdn}
