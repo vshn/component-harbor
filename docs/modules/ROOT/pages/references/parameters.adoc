@@ -6,14 +6,73 @@ The parent key for all of the following parameters is `harbor`.
 
 [horizontal]
 type:: string
-default:: `syn-harbor`
+default:: `syn-$instance`
 
 The namespace in which to deploy this component.
 
 
-== Example
+=== Example
 
 [source,yaml]
 ----
 namespace: example-namespace
+----
+
+
+== `fqdn`
+
+[horizontal]
+type:: string
+mandatory:: **Yes**
+
+FQDN under which the application will be available
+
+
+=== Example
+
+[source,yaml]
+----
+fqd: harbor.example.com
+----
+
+== `s3.bucket`, `s3.endpoint`
+
+[horizontal]
+type:: strings
+mandatory:: **yes**
+
+S3 configuration for the image store
+
+=== Example
+
+[source,yaml]
+----
+s3:
+  bucket: example-harbor-instance-data
+  endpoint: https://s3.example.com/
+----
+
+
+== `s3.accesskey`, `s3.secretkey`
+
+[horizontal]
+type:: strings
+default:: Vault reference
+
+A vault reference pointing to S3 credentials
+
+[source,bash]
+----
+# Adjust to your environment
+instance=harbor
+key="clusters/kv/${TENANT_ID}/${CLUSTER_ID}/${instance}"
+
+# Query for existing secrets first
+vault kv get "${key}"
+
+# If there are existing secrets, add your instance secrets:
+vault kv patch "${key}" s3-accesskey=SOME_VALUE s3-secretkey=SOME_VALUE
+
+# If there is no pre-existing secret, create new:
+vault kv put "${key}" s3-accesskey=SOME_VALUE s3-secretkey=SOME_VALUE
 ----

@@ -1,5 +1,11 @@
 parameters:
   kapitan:
+    dependencies:
+      - type: helm
+        chart_name: harbor
+        version: ${harbor:charts:harbor}
+        source: https://helm.goharbor.io
+        output_path: dependencies/harbor/helmcharts/harbor/${harbor:charts:harbor}/
     compile:
       - input_paths:
           - harbor/component/app.jsonnet
@@ -8,5 +14,12 @@ parameters:
       - input_paths:
           - harbor/component/main.jsonnet
         input_type: jsonnet
-        output_path: harbor/
-
+        output_path: ${_instance}
+      - input_paths:
+          - harbor/helmcharts/harbor/${harbor:charts:harbor}/
+        input_type: helm
+        output_path: ${_instance}/01_harbor_helmchart
+        helm_params:
+          release_name: ${harbor:release_name}
+          namespace: ${harbor:namespace}
+        helm_values: ${harbor:helm_values}

@@ -1,0 +1,21 @@
+---
+parameters:
+  _instance: harbor
+
+  kapitan:
+    dependencies:
+      - type: helm
+        chart_name: harbor
+        version: ${harbor:charts:harbor}
+        source: https://helm.goharbor.io
+        # Required to overwrite for testing
+        output_path: /harbor/helmcharts/harbor/${harbor:charts:harbor}
+
+  harbor:
+    fqdn: harbor.vshn.net
+    secret_key: helpimsoinsecure
+    s3:
+      bucket: vshn-harbor-images
+      endpoint: https://objects.lpg.cloudscale.ch
+      accesskey: test
+      secretkey: test
