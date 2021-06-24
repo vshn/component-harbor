@@ -1,0 +1,4 @@
+parameters:
+  harbor:
+    =_metadata: {}
+    namespace: syn-harbor
