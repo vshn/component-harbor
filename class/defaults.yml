@@ -72,6 +72,12 @@ parameters:
 
       # The secret key used for encryption. Must be a string of 16 chars.
       secretKey: ${harbor:secret_key}
+      core:
+        secret: ${harbor:secret_key}
+      jobservice:
+        secret: ${harbor:secret_key}
+      registry:
+        secret: ${harbor:secret_key}
 
       chartmuseum:
         enabled: false
