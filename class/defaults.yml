@@ -25,9 +25,12 @@ parameters:
         ingress:
           hosts:
             core: ${harbor:fqdn}
+          annotations:
+            cert-manager.io/cluster-issuer: letsencrypt-production
         tls:
-          auto:
-            commonName: ${harbor:fqdn}
+          certSource: secret
+          secret:
+            secretName: harbor-tls
 
       externalURL: https://${harbor:fqdn}
 
